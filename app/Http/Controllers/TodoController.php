@@ -13,7 +13,13 @@ class TodoController extends Controller
     public function index()
     {
 
-
+    $todo = todo::all();
+    $message = "data berhasil diambil";
+    $response = [
+        'message' => $message,
+        'data' => $todo
+    ];
+    return response()->json($response, 200);
 
     }
 
@@ -35,7 +41,7 @@ class TodoController extends Controller
 
 
 
-    
+
     }
 
     /**
