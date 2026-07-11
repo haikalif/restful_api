@@ -12,12 +12,9 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $viewData = todo::all();
-        $massages = [
-            'message' => 'Data berhasil diambil',
-            'data' => $viewData
-        ];
-        return response()->json($massages, 200);
+
+
+
     }
 
     /**
@@ -25,21 +22,9 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
-            'selesai' => 'boolean',
-            'tanggal_selesai' => 'nullable|date',
-            'prioritas' => 'nullable|string|in:rendah,normal,tinggi',
-            'kategori' => 'nullable|string|max:255',
-        ]);
 
-        $todo = todo::create($validatedData);
-        $massages = [
-            'message' => 'Data berhasil ditambahkan',
-            'data' => $todo
-        ];
-        return response()->json($massages, 201);
+
+
     }
 
     /**
@@ -48,16 +33,9 @@ class TodoController extends Controller
     public function show(todo $todo)
     {
 
-        $findTodo = todo::find($todo->id);
-        if (!$findTodo) {
-            return response()->json(['message' => 'Data tidak ditemukan'], 404);
-        }
 
-        $massages = [
-            'message' => 'Data berhasil diambil',
-            'data' => $todo
-        ];
-        return response()->json($massages, 200);
+
+    
     }
 
     /**
@@ -65,21 +43,9 @@ class TodoController extends Controller
      */
     public function update(Request $request, todo $todo)
     {
-        $validatedData = $request->validate([
-            'judul' => 'sometimes|string|max:255',
-            'deskripsi' => 'sometimes|string',
-            'selesai' => 'boolean',
-            'tanggal_selesai' => 'nullable|date',
-            'prioritas' => 'nullable|string|in:rendah,normal,tinggi',
-            'kategori' => 'nullable|string|max:255',
-        ]);
 
-        $todo->update($validatedData);
-        $massages = [
-            'message' => 'Data berhasil diperbarui',
-            'data' => $todo
-        ];
-        return response()->json($massages, 200);
+
+
     }
 
     /**
@@ -87,11 +53,8 @@ class TodoController extends Controller
      */
     public function destroy(todo $todo)
     {
-        $todo->delete();
-        $massages = [
-            'message' => 'Data berhasil dihapus',
-            'data' => $todo
-        ];
-        return response()->json($massages, 200);
+
+
+
     }
 }
