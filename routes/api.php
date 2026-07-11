@@ -58,3 +58,5 @@ use Laravel\Sanctum\Guard;
 //     });
 
 
+
+Route::Post('/todos', [App\Http\Controllers\TodoController::class, 'store']);
