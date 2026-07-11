@@ -60,7 +60,24 @@ class TodoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, todo $todo) {}
+    public function update(Request $request, todo $todo) {
+
+    $request->validate([
+            'judul' => 'sometimes|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'selesai' => 'required|boolean',
+            'tanggal_selesai' => 'nullable|date',
+            'prioritas' => 'nullable|in:rendah,sedang,tinggi',
+            'kategori' => 'nullable|string|max:255',
+        ]);
+        $todo->update($request->all());
+        $response = [
+            'message' => 'data berhasil diupdate',
+            'data' => $todo
+        ];
+        return response()->json($response, 200);
+
+    }
 
     /**
      * Remove the specified resource from storage.
