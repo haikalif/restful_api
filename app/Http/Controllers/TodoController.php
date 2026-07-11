@@ -46,7 +46,16 @@ class TodoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(todo $todo) {}
+    public function show(todo $todo)
+    {
+
+        $findTodo = todo::find($todo->id);
+        $response = [
+            'message' => 'data berhasil diambil',
+            'data' => $findTodo
+        ];
+        return response()->json($response, 200);
+    }
 
     /**
      * Update the specified resource in storage.
