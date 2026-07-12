@@ -15,7 +15,7 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed'
+            'password' => 'required|string|min:8|'
         ]);
 
 
@@ -29,9 +29,31 @@ class AuthController extends Controller
         // mengirim data user berupa json
         return response()->json([
             'message' => 'akun berhasil di buat',
-            'user' => '$user'
-        ]);
+            'user' => $user
+        ], 201);
     }
 
-   
+    public function login(request $request)
+    { //login
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string'
+        ]);
+
+        $user = user::where('email', $request->email)->first(); //check apakah email atau password tersedia
+        if (!$user || !Hash::check($request->password, $user->password)) { //cek jika nilai user dan password false, langsung tolak
+            return response()->json([
+                'message' => 'Email atau password salah atau tidak di temukan',
+
+            ], 401);
+        }
+
+        $token = $user->createToken('kartu akses')->plainTextToken; //membuat token dan memberikan ke setiap user yang berhasil login
+
+        return response()->json([
+            'message' => 'token valid dan berhasil login',
+            'token' => $token,
+            'user' => $user
+        ], 200);
+    }
 }
