@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Guard;
@@ -11,3 +12,6 @@ route::middleware('auth:sanctum')->group(function () {
     Route::put('/todos/{todo}', [App\Http\Controllers\TodoController::class, 'update']);
     route::delete('/todos/{todo}', [App\Http\Controllers\TodoController::class, 'destroy']);
 });
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('/login', [AuthController::class, 'login']);
