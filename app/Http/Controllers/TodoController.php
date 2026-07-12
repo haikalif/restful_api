@@ -82,12 +82,5 @@ class TodoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(todo $todo) {
-        $response = [
-            'message' => 'data berhasil dihapus',
-            'data' => $todo
-        ];
-        $todo->delete();
-        return response()->json($response, 200);
-    }
+    public function destroy(todo $todo) {}
 }
