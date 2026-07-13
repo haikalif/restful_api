@@ -10,10 +10,10 @@ class TodoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $todo = todo::all();
+       $todo = $request->User()->todo;
         $message = "data berhasil diambil";
         $response = [
             'message' => $message,
@@ -36,6 +36,7 @@ class TodoController extends Controller
             'prioritas' => 'nullable|in:rendah,sedang,tinggi',
             'kategori' => 'nullable|string|max:255',
         ]);
+
         $response = [
             'message' => 'data berhasil ditambahkan',
             'data' => todo::create($request->all())
@@ -90,5 +91,5 @@ class TodoController extends Controller
         $todo->delete();
         return response()->json($response, 200);
     }
-    
+
 }
