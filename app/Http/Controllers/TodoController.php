@@ -37,9 +37,11 @@ class TodoController extends Controller
             'kategori' => 'nullable|string|max:255',
         ]);
 
+         $todo = $request->User()->todo()->create($request->all());
+
         $response = [
             'message' => 'data berhasil ditambahkan',
-            'data' => todo::create($request->all())
+            'data' => $todo
         ];
         return response()->json($response, 201);
     }
