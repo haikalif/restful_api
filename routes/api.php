@@ -3,7 +3,7 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Laravel\Sanctum\Guard;
+
 
 route::middleware('auth:sanctum')->group(function () {
     Route::get('/todos', [App\Http\Controllers\TodoController::class, 'index']);
@@ -14,4 +14,4 @@ route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::post('/register', [AuthController::class, 'register']);
-Route::get('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']);
