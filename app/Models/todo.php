@@ -17,4 +17,8 @@ class todo extends Model
         'prioritas',
         'kategori',
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
