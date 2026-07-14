@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Nette\Schema\Message;
 
 class AuthController extends Controller
 {
@@ -55,5 +56,15 @@ class AuthController extends Controller
             'token' => $token,
             'user' => $user
         ], 200);
+    }
+
+    Public function logout(Request $request){
+
+    $takeToken = $request->user()->currentAccessToken()->delete();
+
+    return response()->json([
+        'Message' => 'logout berhasil atau token sudah terhapus',
+        'data' => $takeToken
+    ]);
     }
 }
