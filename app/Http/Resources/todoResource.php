@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,7 +21,7 @@ class todoResource extends JsonResource
             'desrkipsi_tugas' => $this->deskripsi,
             'status_tugas' => $this->selesai ? 'done coy' : 'kerjain nih belum kelar',
             'level_prioritas' => $this->prioritas,
-            'tanggal_dibuat' => $this->created_at->format('d-m-Y H:i')
+            'tanggal_dibuat' => $this->tanggal_dibuat ? \Carbon\Carbon::parse($this->tanggal_dibuat)->format('d-m-Y H:i') : 'ga ada tanggal bang',
         ];
     }
 }
