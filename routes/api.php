@@ -12,6 +12,10 @@ route::middleware('auth:sanctum')->group(function () {
     Route::put('/todos/{todo}', [App\Http\Controllers\TodoController::class, 'update']);
     route::delete('/todos/{todo}', [App\Http\Controllers\TodoController::class, 'destroy']);
     route::post('/logout', [AuthController::class, 'logout']);
+      Route::get('/intip-user', function (Request $request) {
+        // Langsung melempar data user mentah-mentah tanpa saringan!
+        return response()->json($request->user());
+    });
 });
 
 
