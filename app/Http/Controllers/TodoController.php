@@ -17,9 +17,10 @@ class TodoController extends Controller
         $message = "data berhasil diambil";
         $response = [
             'message' => $message,
-            'data' => $todo
+            'data' => \App\Http\Resources\todoResource::collection($todo)
         ];
         return response()->json($response, 200);
+
     }
 
     /**
@@ -55,7 +56,7 @@ class TodoController extends Controller
         $findTodo = todo::find($todo->id);
         $response = [
             'message' => 'data berhasil diambil',
-            'data' => $findTodo
+            'data' => new \App\Http\Resources\todoResource($findTodo)
         ];
         return response()->json($response, 200);
     }
@@ -93,5 +94,6 @@ class TodoController extends Controller
         $todo->delete();
         return response()->json($response, 200);
     }
+
 
 }
