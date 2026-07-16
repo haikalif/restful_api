@@ -34,7 +34,7 @@ class TodoController extends Controller
 
         $response = [
             'message' => 'data berhasil ditambahkan',
-            'data' => new \app\Http\Requests\storeTodoRequest($todo)
+            'data' => new \app\Http\Resources\todoResource($todo)
         ];
         return response()->json($response, 201);
     }
@@ -61,7 +61,7 @@ class TodoController extends Controller
         $todo->update($validate);
         $response = [
             'message' => 'data berhasil diupdate',
-            'data' => new \app\Http\Requests\storeTodoRequest($todo)
+            'data' => new \app\Http\Resources\todoResource($todo)
         ];
         return response()->json($response, 200);
 
@@ -73,7 +73,7 @@ class TodoController extends Controller
     public function destroy(todo $todo) {
         $response = [
             'message' => 'data berhasil dihapus',
-            'data' => new \app\Http\Requests\storeTodoRequest($todo)
+            'data' => new \app\Http\Resources\todoResource($todo)
         ];
         $todo->delete();
         return response()->json($response, 200);
