@@ -26,19 +26,11 @@ class TodoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(\app\Http\Requests\storeTodoRequest $request)
     {
 
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'selesai' => 'required|boolean',
-            'tanggal_selesai' => 'nullable|date',
-            'prioritas' => 'nullable|in:rendah,sedang,tinggi',
-            'kategori' => 'nullable|string|max:255',
-        ]);
-
-         $todo = $request->User()->todo()->create($request->all());
+        $validate = $request->validated();
+         $todo = $request->User()->todo()->create($validate);
 
         $response = [
             'message' => 'data berhasil ditambahkan',
