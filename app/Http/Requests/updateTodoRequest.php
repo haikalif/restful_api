@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class updateTodoRequest extends FormRequest
 {
@@ -12,7 +13,11 @@ class updateTodoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        if (Auth::guard('sanctum')->check()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**
@@ -23,7 +28,12 @@ class updateTodoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'judul' => 'sometimes|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'selesai' => 'required|boolean',
+            'tanggal_selesai' => 'nullable|date',
+            'prioritas' => 'nullable|in:rendah,sedang,tinggi',
+            'kategori' => 'nullable|string|max:255',
         ];
     }
 }
