@@ -13,7 +13,7 @@ class TodoController extends Controller
     public function index(Request $request)
     {
 
-       $todo = $request->User()->todo;
+       $todo = $request->user()->todo;
         $message = "data berhasil diambil";
         $response = [
             'message' => $message,
@@ -26,23 +26,15 @@ class TodoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(\App\Http\Requests\storeTodoRequest $request)
     {
 
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'selesai' => 'required|boolean',
-            'tanggal_selesai' => 'nullable|date',
-            'prioritas' => 'nullable|in:rendah,sedang,tinggi',
-            'kategori' => 'nullable|string|max:255',
-        ]);
-
-         $todo = $request->User()->todo()->create($request->all());
+        $validate = $request->validated();
+         $todo = $request->user()->todo()->create($validate);
 
         $response = [
             'message' => 'data berhasil ditambahkan',
-            'data' => $todo
+            'data' => new \App\Http\Resources\todoResource($todo)
         ];
         return response()->json($response, 201);
     }
@@ -53,10 +45,9 @@ class TodoController extends Controller
     public function show(todo $todo)
     {
 
-        $findTodo = todo::find($todo->id);
         $response = [
             'message' => 'data berhasil diambil',
-            'data' => new \App\Http\Resources\todoResource($findTodo)
+            'data' => new \App\Http\Resources\todoResource($todo)
         ];
         return response()->json($response, 200);
     }
@@ -64,20 +55,13 @@ class TodoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, todo $todo) {
+    public function update(\App\Http\Requests\updateTodoRequest $request, todo $todo) {
 
-    $request->validate([
-            'judul' => 'sometimes|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'selesai' => 'required|boolean',
-            'tanggal_selesai' => 'nullable|date',
-            'prioritas' => 'nullable|in:rendah,sedang,tinggi',
-            'kategori' => 'nullable|string|max:255',
-        ]);
-        $todo->update($request->all());
+        $validate = $request->validated();
+        $todo->update($validate);
         $response = [
             'message' => 'data berhasil diupdate',
-            'data' => $todo
+            'data' => new \App\Http\Resources\todoResource($todo)
         ];
         return response()->json($response, 200);
 
@@ -89,7 +73,7 @@ class TodoController extends Controller
     public function destroy(todo $todo) {
         $response = [
             'message' => 'data berhasil dihapus',
-            'data' => $todo
+            'data' => new \App\Http\Resources\todoResource($todo)
         ];
         $todo->delete();
         return response()->json($response, 200);
