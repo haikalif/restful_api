@@ -26,7 +26,7 @@ class TodoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(\app\Http\Requests\storeTodoRequest $request)
+    public function store(\App\Http\Requests\storeTodoRequest $request)
     {
 
         $validate = $request->validated();
@@ -34,7 +34,7 @@ class TodoController extends Controller
 
         $response = [
             'message' => 'data berhasil ditambahkan',
-            'data' => new \app\Http\Resources\todoResource($todo)
+            'data' => new \App\Http\Resources\todoResource($todo)
         ];
         return response()->json($response, 201);
     }
@@ -55,13 +55,13 @@ class TodoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(\app\Http\Requests\updateTodoRequest $request, todo $todo) {
+    public function update(\App\Http\Requests\updateTodoRequest $request, todo $todo) {
 
         $validate = $request->validated();
         $todo->update($validate);
         $response = [
             'message' => 'data berhasil diupdate',
-            'data' => new \app\Http\Resources\todoResource($todo)
+            'data' => new \App\Http\Resources\todoResource($todo)
         ];
         return response()->json($response, 200);
 
@@ -73,7 +73,7 @@ class TodoController extends Controller
     public function destroy(todo $todo) {
         $response = [
             'message' => 'data berhasil dihapus',
-            'data' => new \app\Http\Resources\todoResource($todo)
+            'data' => new \App\Http\Resources\todoResource($todo)
         ];
         $todo->delete();
         return response()->json($response, 200);
