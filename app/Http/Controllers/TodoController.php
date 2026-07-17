@@ -13,7 +13,7 @@ class TodoController extends Controller
     public function index(Request $request)
     {
 
-       $todo = $request->user()->todo::with('user')->get();
+       $todo = $request->user()->todo()->with('user')->get();
         $message = "data berhasil diambil";
         $response = [
             'message' => $message,
