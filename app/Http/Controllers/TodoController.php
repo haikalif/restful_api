@@ -13,7 +13,7 @@ class TodoController extends Controller
     public function index(Request $request)
     {
 
-       $todo = $request->user()->todo;
+       $todo = $request->user()->todo()->with('user')->get();
         $message = "data berhasil diambil";
         $response = [
             'message' => $message,
@@ -45,6 +45,7 @@ class TodoController extends Controller
     public function show(todo $todo)
     {
 
+        $todo->load('user');
         $response = [
             'message' => 'data berhasil diambil',
             'data' => new \App\Http\Resources\todoResource($todo)
