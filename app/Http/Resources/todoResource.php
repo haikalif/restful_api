@@ -22,6 +22,7 @@ class todoResource extends JsonResource
             'status_tugas' => $this->selesai ? 'done coy' : 'kerjain nih belum kelar',
             'level_prioritas' => $this->prioritas,
             'tanggal_dibuat' => $this->tanggal_dibuat ? \Carbon\Carbon::parse($this->tanggal_dibuat)->format('d-m-Y H:i') : 'ga ada tanggal bang',
+            'profile' => new \App\Http\Resources\userResource($this->whenLoaded('user')),
         ];
     }
 }
