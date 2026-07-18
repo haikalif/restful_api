@@ -32,7 +32,7 @@ class updateTodoRequest extends FormRequest
             'judul' => 'sometimes|string|max:255',
             'deskripsi' => 'sometimes|string',
             'selesai' => 'required|boolean',
-            'tanggal_selesai' => 'reqired_if:selesai,true|date',
+            'tanggal_selesai' => 'required_if:selesai,true|date',
             'prioritas' => 'sometimes|in:low,normal,high',
             'kategori' => 'sometimes|string|max:255',
         ];
