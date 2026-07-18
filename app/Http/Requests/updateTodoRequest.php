@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Override;
 
 class updateTodoRequest extends FormRequest
 {
@@ -34,6 +35,15 @@ class updateTodoRequest extends FormRequest
             'tanggal_selesai' => 'nullable|date',
             'prioritas' => 'nullable|in:low,normal,high',
             'kategori' => 'nullable|string|max:255',
+        ];
+    }
+
+    #[Override]
+    public function messages(): array
+    {
+        return [
+            'judul.sometimes' => 'bagian ini bisa berubah bisa tetap menggunakan data lama jika tidak di replace',
+            'prioritas.in' => 'cuma ada 3 pilihan low,normal,high. jangan aneh aneh ygy',
         ];
     }
 }
