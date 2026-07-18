@@ -30,11 +30,11 @@ class updateTodoRequest extends FormRequest
     {
         return [
             'judul' => 'sometimes|string|max:255',
-            'deskripsi' => 'nullable|string',
+            'deskripsi' => 'sometimes|string',
             'selesai' => 'required|boolean',
-            'tanggal_selesai' => 'nullable|date',
-            'prioritas' => 'nullable|in:low,normal,high',
-            'kategori' => 'nullable|string|max:255',
+            'tanggal_selesai' => 'sometimes|date',
+            'prioritas' => 'sometimes|in:low,normal,high',
+            'kategori' => 'sometimes|string|max:255',
         ];
     }
 
@@ -42,8 +42,7 @@ class updateTodoRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'judul.sometimes' => 'bagian ini bisa berubah bisa tetap menggunakan data lama jika tidak di replace',
-            'prioritas.in' => 'cuma ada 3 pilihan low,normal,high. jangan aneh aneh ygy',
+            'selesai.required' => 'adoi wang, nak isi boolean pon kau malas, kau tingal buat 1 dengan 0 je malas juga, memang lah kau ni'
         ];
     }
 }
