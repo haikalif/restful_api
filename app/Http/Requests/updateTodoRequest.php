@@ -42,7 +42,8 @@ class updateTodoRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'selesai.required' => 'adoi wang, nak isi boolean pon kau malas, kau tingal buat 1 dengan 0 je malas juga, memang lah kau ni'
+            'selesai.required' => 'adoi wang, nak isi boolean pon kau malas, kau tingal buat 1 dengan 0 je malas juga, memang lah kau ni',
+            'tanggal_selesai.required' => 'kasi dong tanggal nya, biar ga lupa ini tugas kapan lu selesaiin'
         ];
     }
 }
