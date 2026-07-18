@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Override;
 
 class storeTodoRequest extends FormRequest
 {
@@ -34,6 +35,15 @@ class storeTodoRequest extends FormRequest
             'tanggal_selesai' => 'nullable|date',
             'prioritas' => 'nullable|in:low,normal,high',
             'kategori' => 'nullable|string|max:255',
+        ];
+    }
+
+    #[Override]
+    public function messages(): array
+    {
+        return [
+            'judul.required' => 'dompet boleh kosong, kolom ini jangan woi',
+            'selesai.required' => 'masa ngetik boolean 1 sama 0 aja males, isi aja napa',
         ];
     }
 }
