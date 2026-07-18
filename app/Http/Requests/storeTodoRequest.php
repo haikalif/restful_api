@@ -47,4 +47,11 @@ class storeTodoRequest extends FormRequest
             'prioritas.required' => 'wajib isi ya bang, ntar lupa lho, bisa aja tugas yang lu bikin itu prioritasnya tinggi tapi lu malah santai karena ga ada label',
         ];
     }
+
+    #[Override]
+    protected function prepareForValidation(): void {
+        $this->merge([
+            'judul' => trim($this->judul)
+        ]);
+    }
 }
