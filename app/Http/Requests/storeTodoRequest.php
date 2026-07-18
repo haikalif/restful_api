@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Override;
 
 class storeTodoRequest extends FormRequest
 {
@@ -13,9 +14,9 @@ class storeTodoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if (Auth::guard('sanctum')->check()){
+        if (Auth::guard('sanctum')->check()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -32,8 +33,29 @@ class storeTodoRequest extends FormRequest
             'deskripsi' => 'nullable|string',
             'selesai' => 'required|boolean',
             'tanggal_selesai' => 'nullable|date',
-            'prioritas' => 'nullable|in:rendah,sedang,tinggi',
+            'prioritas' => 'required|in:low,normal,high',
             'kategori' => 'nullable|string|max:255',
         ];
+    }
+
+    #[Override]
+    public function messages(): array
+    {
+        return [
+            'judul.required' => 'dompet boleh kosong, kolom ini jangan woi',
+            'selesai.required' => 'masa ngetik boolean 1 sama 0 aja males, isi aja napa',
+            'prioritas.required' => 'wajib isi ya bang, ntar lupa lho, bisa aja tugas yang lu bikin itu prioritasnya tinggi tapi lu malah santai karena ga ada label',
+        ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('judul')) {
+            $input_bersih = preg_replace('/\s+/', ' ',  trim($this->judul));
+
+            $this->merge([
+                'judul' => $input_bersih,
+            ]);
+        }
     }
 }

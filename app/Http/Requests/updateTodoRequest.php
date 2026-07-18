@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Override;
 
 class updateTodoRequest extends FormRequest
 {
@@ -13,9 +14,9 @@ class updateTodoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if (Auth::guard('sanctum')->check()){
+        if (Auth::guard('sanctum')->check()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -29,11 +30,31 @@ class updateTodoRequest extends FormRequest
     {
         return [
             'judul' => 'sometimes|string|max:255',
-            'deskripsi' => 'nullable|string',
+            'deskripsi' => 'sometimes|string',
             'selesai' => 'required|boolean',
-            'tanggal_selesai' => 'nullable|date',
-            'prioritas' => 'nullable|in:rendah,sedang,tinggi',
-            'kategori' => 'nullable|string|max:255',
+            'tanggal_selesai' => 'required_if:selesai,true|date',
+            'prioritas' => 'sometimes|in:low,normal,high',
+            'kategori' => 'sometimes|string|max:255',
         ];
+    }
+
+    #[Override]
+    public function messages(): array
+    {
+        return [
+            'selesai.required' => 'adoi wang, nak isi boolean pon kau malas, kau tingal buat 1 dengan 0 je malas juga, memang lah kau ni',
+            'tanggal_selesai.required_if' => 'kasi dong tanggal nya, biar ga lupa ini tugas kapan lu selesaiin'
+        ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('judul')) {
+            $input_bersih = preg_replace('/\s+/', ' ',  trim($this->judul));
+
+            $this->merge([
+                'judul' => $input_bersih,
+            ]);
+        }
     }
 }
