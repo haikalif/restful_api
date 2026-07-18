@@ -14,9 +14,9 @@ class updateTodoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if (Auth::guard('sanctum')->check()){
+        if (Auth::guard('sanctum')->check()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -47,10 +47,14 @@ class updateTodoRequest extends FormRequest
         ];
     }
 
-       protected function prepareForValidation(): void
+    protected function prepareForValidation(): void
     {
-        $this->merge([
-            'judul' => trim($this->judul)
-        ]);
+        if ($this->has('judul')) {
+            $input_bersih = preg_replace('/\s+/', ' ',  trim($this->judul));
+
+            $this->merge([
+                'judul' => $input_bersih,
+            ]);
+        }
     }
 }

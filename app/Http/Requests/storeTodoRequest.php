@@ -50,8 +50,12 @@ class storeTodoRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $this->merge([
-            'judul' => trim($this->judul)
-        ]);
+        if ($this->has('judul')) {
+            $input_bersih = preg_replace('/\s+/', ' ',  trim($this->judul));
+
+            $this->merge([
+                'judul' => $input_bersih,
+            ]);
+        }
     }
 }
