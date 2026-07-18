@@ -46,4 +46,11 @@ class updateTodoRequest extends FormRequest
             'tanggal_selesai.required_if' => 'kasi dong tanggal nya, biar ga lupa ini tugas kapan lu selesaiin'
         ];
     }
+
+       protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'judul' => trim($this->judul)
+        ]);
+    }
 }

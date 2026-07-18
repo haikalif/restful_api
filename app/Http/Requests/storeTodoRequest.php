@@ -14,9 +14,9 @@ class storeTodoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if (Auth::guard('sanctum')->check()){
+        if (Auth::guard('sanctum')->check()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -48,8 +48,8 @@ class storeTodoRequest extends FormRequest
         ];
     }
 
-    #[Override]
-    protected function prepareForValidation(): void {
+    protected function prepareForValidation(): void
+    {
         $this->merge([
             'judul' => trim($this->judul)
         ]);
