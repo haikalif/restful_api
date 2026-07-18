@@ -32,7 +32,7 @@ class storeTodoRequest extends FormRequest
             'deskripsi' => 'nullable|string',
             'selesai' => 'required|boolean',
             'tanggal_selesai' => 'nullable|date',
-            'prioritas' => 'nullable|in:rendah,sedang,tinggi',
+            'prioritas' => 'nullable|in:low,normal,high',
             'kategori' => 'nullable|string|max:255',
         ];
     }
