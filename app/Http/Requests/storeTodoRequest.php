@@ -44,6 +44,7 @@ class storeTodoRequest extends FormRequest
         return [
             'judul.required' => 'dompet boleh kosong, kolom ini jangan woi',
             'selesai.required' => 'masa ngetik boolean 1 sama 0 aja males, isi aja napa',
+            'prioritas.required' => 'wajib isi ya bang, ntar lupa lho, bisa aja tugas yang lu bikin itu prioritasnya tinggi tapi lu malah santai karena ga ada label',
         ];
     }
 }
