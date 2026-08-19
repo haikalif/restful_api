@@ -12,7 +12,6 @@ class TodoController extends Controller
      */
     public function index(Request $request)
     {
-
         $todo = $request->user()->todo()->with('user')->paginate(2);
         return (new \App\Http\Resources\TodoCollection($todo))->additional([
             'message' => 'data berhasil diambil',
@@ -40,7 +39,7 @@ class TodoController extends Controller
      */
     public function show(todo $todo)
     {
-
+        $this->authorize('view', $todo);
         $todo->load('user');
         $response = [
             'message' => 'data berhasil diambil',
@@ -54,10 +53,11 @@ class TodoController extends Controller
      */
     public function update(\App\Http\Requests\updateTodoRequest $request, todo $todo)
     {
-
+        $this->authorize('update', $todo);
 
         $validate = $request->validated();
-        $todo->update($validate);
+        $todo->update($validate); 
+
         $response = [
             'message' => 'data berhasil diupdate',
             'data' => new \App\Http\Resources\todoResource($todo)
@@ -70,8 +70,7 @@ class TodoController extends Controller
      */
     public function destroy(Request $request, todo $todo)
     {
-
-
+        $this->authorize('delete', $todo);
 
         $response = [
             'message' => 'data berhasil dihapus',
