@@ -56,7 +56,7 @@ class TodoController extends Controller
         $this->authorize('update', $todo);
 
         $validate = $request->validated();
-        $todo->update($validate); // 🔧 FIX: Jangan lupa masukkan perintah update ke database! [🔍]
+        $todo->update($validate); 
 
         $response = [
             'message' => 'data berhasil diupdate',
