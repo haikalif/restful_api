@@ -54,9 +54,8 @@ class TodoController extends Controller
     public function update(\App\Http\Requests\updateTodoRequest $request, todo $todo)
     {
         $this->authorize('update', $todo);
-
         $validate = $request->validated();
-        $todo->update($validate); // 🔧 FIX: Jangan lupa masukkan perintah update ke database! [🔍]
+        $todo->update($validate);
 
         $response = [
             'message' => 'data berhasil diupdate',
@@ -71,7 +70,6 @@ class TodoController extends Controller
     public function destroy(Request $request, todo $todo)
     {
         $this->authorize('delete', $todo);
-
         $response = [
             'message' => 'data berhasil dihapus',
             'data' => new \App\Http\Resources\todoResource($todo)
