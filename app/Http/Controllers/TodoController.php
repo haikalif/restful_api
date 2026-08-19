@@ -71,7 +71,7 @@ class TodoController extends Controller
     public function destroy(Request $request, todo $todo)
     {
 
-       
+
 
         $response = [
             'message' => 'data berhasil dihapus',
@@ -90,4 +90,3 @@ class TodoController extends Controller
         ], 200);
     }
 }
-
