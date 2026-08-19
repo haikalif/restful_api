@@ -17,13 +17,17 @@ class TodoCollection extends ResourceCollection
     {
         return [
             'data' => $this->collection,
-
-            Metadata::class => [
-                'total' => $this->collection->count(),
-                'count' => $this->collection->count(),
-                'per_page' => $this->perPage(),
-                'current_page' => $this->currentPage(),
-                'total_pages' => $this->lastPage(),
+        ];
+    }
+    public function with(Request $request): array
+    {
+        return [
+            'meta' => [
+                'total' => $this->resource->total(),
+                'count' => $this->resource->count(),
+                'per_page' => $this->resource->perPage(),
+                'current_page' => $this->resource->currentPage(),
+                'total_pages' => $this->resource->lastPage(),
             ],
         ];
     }
