@@ -13,7 +13,7 @@ class TodoController extends Controller
     public function index(Request $request)
     {
 
-       $todo = $request->user()->todo()->with('user')->paginate(2);
+        $todo = $request->user()->todo()->with('user')->paginate(2);
         return (new \App\Http\Resources\TodoCollection($todo))->additional([
             'message' => 'data berhasil diambil',
         ]);
@@ -26,7 +26,7 @@ class TodoController extends Controller
     {
 
         $validate = $request->validated();
-         $todo = $request->user()->todo()->create($validate);
+        $todo = $request->user()->todo()->create($validate);
 
         $response = [
             'message' => 'data berhasil ditambahkan',
@@ -52,15 +52,16 @@ class TodoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(\App\Http\Requests\updateTodoRequest $request, todo $todo) {
+    public function update(\App\Http\Requests\updateTodoRequest $request, todo $todo)
+    {
 
-     if($request->user()->id !== $todo->user_id){
-        $response = [
-            "message" => "ditolak"
-        ];
+        if ($request->user()->id !== $todo->user_id) {
+            $response = [
+                "message" => "ditolak"
+            ];
 
-        return response()->json($response, 403);
-     }
+            return response()->json($response, 403);
+        }
         $validate = $request->validated();
         $todo->update($validate);
         $response = [
@@ -68,19 +69,19 @@ class TodoController extends Controller
             'data' => new \App\Http\Resources\todoResource($todo)
         ];
         return response()->json($response, 200);
-
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request , todo $todo) {
+    public function destroy(Request $request, todo $todo)
+    {
 
-        if ($request->user()->id !== $todo->user_id){
-        $response = [
-            'message' => 'lau sape mpruy'
-        ];
-        return response()->json($response , 403);
+        if ($request->user()->id !== $todo->user_id) {
+            $response = [
+                'message' => 'lau sape mpruy'
+            ];
+            return response()->json($response, 403);
         }
 
         $response = [
@@ -91,5 +92,12 @@ class TodoController extends Controller
         return response()->json($response, 200);
     }
 
+    public function logout(Request $request)
+    {
 
+        $takeToken = $request->user()->currentAccessToken()->delete();
+        return response()->json([
+            'message' => 'token berhasil dihapus, berhasil logout',
+        ], 200);
+    }
 }
