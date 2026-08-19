@@ -55,13 +55,7 @@ class TodoController extends Controller
     public function update(\App\Http\Requests\updateTodoRequest $request, todo $todo)
     {
 
-        if ($request->user()->id !== $todo->user_id) {
-            $response = [
-                "message" => "ditolak"
-            ];
 
-            return response()->json($response, 403);
-        }
         $validate = $request->validated();
         $todo->update($validate);
         $response = [
@@ -77,12 +71,7 @@ class TodoController extends Controller
     public function destroy(Request $request, todo $todo)
     {
 
-        if ($request->user()->id !== $todo->user_id) {
-            $response = [
-                'message' => 'lau sape mpruy'
-            ];
-            return response()->json($response, 403);
-        }
+       
 
         $response = [
             'message' => 'data berhasil dihapus',
@@ -101,3 +90,4 @@ class TodoController extends Controller
         ], 200);
     }
 }
+
