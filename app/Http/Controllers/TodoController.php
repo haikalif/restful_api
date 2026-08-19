@@ -13,13 +13,10 @@ class TodoController extends Controller
     public function index(Request $request)
     {
 
-       $todo = $request->user()->todo()->with('user')->paginate(10);
-        $message = "data berhasil diambil";
-        $response = [
-            'message' => $message,
-            'data' => new \App\Http\Resources\TodoCollection($todo)
-        ];
-        return response()->json($response, 200);
+       $todo = $request->user()->todo()->with('user')->paginate(2);
+        return (new \App\Http\Resources\TodoCollection($todo))->additional([
+            'message' => 'data berhasil diambil',
+        ]);
     }
 
     /**

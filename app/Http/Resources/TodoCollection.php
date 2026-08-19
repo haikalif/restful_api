@@ -21,7 +21,7 @@ class TodoCollection extends ResourceCollection
     }
     public function with(Request $request): array
     {
-        return [
+       return [
             'meta' => [
                 'total' => $this->resource->total(),
                 'count' => $this->resource->count(),
