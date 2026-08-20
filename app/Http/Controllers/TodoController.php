@@ -39,7 +39,6 @@ class TodoController extends Controller
      */
     public function show(todo $todo)
     {
-        $this->authorize('view', $todo);
         $todo->load('user');
         $response = [
             'message' => 'data berhasil diambil',
@@ -56,7 +55,7 @@ class TodoController extends Controller
         $this->authorize('update', $todo);
 
         $validate = $request->validated();
-        $todo->update($validate); 
+        $todo->update($validate);
 
         $response = [
             'message' => 'data berhasil diupdate',

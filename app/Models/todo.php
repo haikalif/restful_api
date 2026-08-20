@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class todo extends Model
 {
     protected $table = 'todos';
+
+    use SoftDeletes;
 
     public $timestamps = false;
     protected $fillable = [

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('kategori')->default('umum');
             $table->timestamp('tanggal_dibuat')->useCurrent();
             $table->timestamp('tanggal_diubah')->useCurrent()->useCurrentOnUpdate();
+            $table->softDeletes();
         });
     }
 
