@@ -12,7 +12,7 @@ class TodoController extends Controller
      */
     public function index(Request $request)
     {
-        $todo = $request->user()->todo()->with('user')->paginate(2);
+        $todo = $request->user()->todo()->with('user')->paginate(10);
         return (new \App\Http\Resources\TodoCollection($todo))->additional([
             'message' => 'data berhasil diambil',
         ]);
@@ -94,6 +94,36 @@ class TodoController extends Controller
         return response()->json([
             'message' => 'data berhasil dikembalikan',
             'data' => new \App\Http\Resources\todoResource($todo)
+        ], 200);
+    }
+
+    public function showDeleted(Request $request)
+    {
+        $deletedTodos = $request->user()->todo()->onlyTrashed()->get();
+
+        return response()->json([
+            'message' => 'data yang dihapus berhasil diambil',
+            'data' => \App\Http\Resources\todoResource::collection($deletedTodos)
+        ], 200);
+    }
+
+    public function restoreAll(Request $request)
+    {
+        $deletedTodos = $request->user()->todo()->onlyTrashed()->get();
+
+        if ($deletedTodos->isEmpty()) {
+            return response()->json([
+                'message' => 'tidak ada data yang dihapus',
+            ], 404);
+        }
+
+        foreach ($deletedTodos as $todo) {
+            $todo->restore();
+        }
+
+        return response()->json([
+            'message' => 'semua data yang dihapus berhasil dikembalikan',
+            'data' => \App\Http\Resources\todoResource::collection($deletedTodos)
         ], 200);
     }
 

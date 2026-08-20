@@ -53,7 +53,7 @@ class TodoPolicy
      */
     public function restore(User $user, todo $todo): bool
     {
-        return false;
+        return $user->id === $todo->user_id;
     }
 
     /**
@@ -61,6 +61,6 @@ class TodoPolicy
      */
     public function forceDelete(User $user, todo $todo): bool
     {
-        return false;
+        return $user->id === $todo->user_id;
     }
 }
