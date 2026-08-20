@@ -79,12 +79,22 @@ class TodoController extends Controller
         return response()->json($response, 200);
     }
 
-    public function logout(Request $request)
+    public function restore(Request $request, $id)
     {
+        $todo = todo::onlyTrashed()->findOrFail($id);
+        if (!$todo) {
+            return response()->json([
+                'message' => 'data tidak ditemukan',
+            ], 404);
+        }
 
-        $takeToken = $request->user()->currentAccessToken()->delete();
+        $this->authorize('restore', $todo);
+
+        $todo->restore();
         return response()->json([
-            'message' => 'token berhasil dihapus, berhasil logout',
+            'message' => 'data berhasil dikembalikan',
+            'data' => new \App\Http\Resources\todoResource($todo)
         ], 200);
     }
+
 }
